@@ -1,0 +1,64 @@
+{% extends 'empleados/base.html' %}
+
+{% block title %}Lista de Programadores{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h4 class="text-center">Lista de Programadores</h4>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            {% if empleados %}
+            <table class="table table-striped align-middle">
+                <thead>
+                    <tr>
+                        <th style="width: 150px;">Foto</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Email</th>
+                        <th>Edad</th>
+                        <th>Género</th>
+                        <th>Salario</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for empleado in empleados %}
+                    <tr>
+                        <td class="text-center">
+                            {% if empleado.foto_empleado %}
+                            <img src="{{ empleado.foto_empleado.url }}" alt="Foto del programador" width="120" height="120" style="object-fit: cover;">
+                            {% else %}
+                            <img src="/media/fotos/usuario.png" alt="Foto por defecto" width="120" height="120" style="object-fit: cover;">
+                            {% endif %}
+                        </td>
+                        <td>{{ empleado.nombre_empleado }}</td>
+                        <td>{{ empleado.apellido_empleado }}</td>
+                        <td>{{ empleado.email_empleado }}</td>
+                        <td>{{ empleado.edad_empleado }}</td>
+                        <td>{{ empleado.genero_empleado }}</td>
+                        <td>${{ empleado.salario_empleado }}</td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <a href="{% url 'editar_empleado' empleado.id %}" class="btn btn-warning">
+                                    <i class="fas fa-edit"></i> Editar
+                                </a>
+                                <a href="{% url 'eliminar_empleado' empleado.id %}" class="btn btn-danger">
+                                    <i class="fas fa-trash-alt"></i> Eliminar
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <div class="alert alert-info text-center">
+                No hay programadores registrados
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %} 

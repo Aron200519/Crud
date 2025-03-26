@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h3>Listado de Tareas</h3>
+                    <a href="{% url 'asignar_tarea' %}" class="btn btn-primary">Asignar Nueva Tarea</a>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Empleado</th>
+                                    <th>Título</th>
+                                    <th>Descripción</th>
+                                    <th>Fecha Límite</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for tarea in tareas %}
+                                <tr>
+                                    <td>{{ tarea.empleado.nombre_empleado }} {{ tarea.empleado.apellido_empleado }}</td>
+                                    <td>{{ tarea.titulo_tarea }}</td>
+                                    <td>{{ tarea.descripcion_tarea }}</td>
+                                    <td>{{ tarea.fecha_limite|date:"d/m/Y H:i" }}</td>
+                                    <td>
+                                        <span class="badge {% if tarea.estado_tarea == 'completada' %}bg-success
+                                                         {% elif tarea.estado_tarea == 'en_progreso' %}bg-warning
+                                                         {% else %}bg-danger{% endif %}">
+                                            {{ tarea.get_estado_tarea_display }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <a href="#" class="btn btn-sm btn-info">Editar</a>
+                                        <a href="#" class="btn btn-sm btn-danger">Eliminar</a>
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="6" class="text-center">No hay tareas asignadas</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

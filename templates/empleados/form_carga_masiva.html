@@ -1,0 +1,83 @@
+{% extends 'empleados/base.html' %}
+
+{% block title %}Importar/Exportar Datos{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h4 class="text-center">Importar/Exportar Datos</h4>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card mb-3">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="card-title mb-0">Importar Datos</h5>
+                    </div>
+                    <div class="card-body">
+                        <form id="formCargaMasiva" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="archivo_xlsx" class="form-label">Seleccionar archivo Excel (.xlsx)</label>
+                                <input type="file" class="form-control" id="archivo_xlsx" name="archivo_xlsx" accept=".xlsx" required>
+                            </div>
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-file-import"></i> Importar Datos
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header bg-success text-white">
+                        <h5 class="card-title mb-0">Instrucciones</h5>
+                    </div>
+                    <div class="card-body">
+                        <h6>El archivo Excel debe contener las siguientes columnas:</h6>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Nombre</li>
+                            <li class="list-group-item">Apellido</li>
+                            <li class="list-group-item">Email</li>
+                            <li class="list-group-item">Edad</li>
+                            <li class="list-group-item">Sexo</li>
+                            <li class="list-group-item">Salario</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.getElementById('formCargaMasiva').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    let formData = new FormData(this);
+    
+    fetch('{% url "cargar_archivo" %}', {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status_server === 'success') {
+            alert('Los datos se importaron correctamente');
+            window.location.href = '{% url "listar_empleados" %}';
+        } else {
+            alert('Error: ' + data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Error al procesar la solicitud');
+    });
+});
+</script>
+{% endblock %} 

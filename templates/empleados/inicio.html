@@ -1,0 +1,70 @@
+{% extends 'empleados/base.html' %}
+
+{% block title %}Inicio - Sistema de Gestión de Programadores{% endblock %}
+
+{% block content %}
+<h1 class="text-center mb-4">Bienvenido al Sistema de Gestión de Programadores</h1>
+
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+    <!-- Tarjeta Registrar -->
+    <div class="col">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <i class="fas fa-user-plus fa-3x text-primary mb-3"></i>
+                <h5 class="card-title">Registrar Programador</h5>
+                <p class="card-text">Agrega nuevos programadores al sistema</p>
+                <a href="{% url 'registrar_empleado' %}" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> Registrar
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tarjeta Listar -->
+    <div class="col">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <i class="fas fa-users fa-3x text-success mb-3"></i>
+                <h5 class="card-title">Listar Programadores</h5>
+                <p class="card-text">Ver todos los programadores registrados</p>
+                <a href="{% url 'listar_empleados' %}" class="btn btn-success">
+                    <i class="fas fa-list"></i> Listar
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tarjeta Importar/Exportar -->
+    <div class="col">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <i class="fas fa-file-excel fa-3x text-info mb-3"></i>
+                <h5 class="card-title">Importar/Exportar</h5>
+                <p class="card-text">Gestiona datos mediante archivos Excel</p>
+                <a href="{% url 'form_carga_masiva' %}" class="btn btn-info text-white">
+                    <i class="fas fa-file-import"></i> Ir a Gestión
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tarjeta Gestión de Tareas -->
+    <div class="col">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <i class="fas fa-tasks fa-3x text-warning mb-3"></i>
+                <h5 class="card-title">Gestión de Tareas</h5>
+                <p class="card-text">Asigna y administra tareas</p>
+                <div class="d-grid gap-2">
+                    <a href="{% url 'asignar_tarea' %}" class="btn btn-warning">
+                        <i class="fas fa-plus"></i> Asignar Tarea
+                    </a>
+                    <a href="{% url 'listar_tareas' %}" class="btn btn-outline-warning">
+                        <i class="fas fa-list"></i> Ver Tareas
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 
